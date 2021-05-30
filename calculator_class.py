@@ -1,6 +1,6 @@
 import tkinter as tk
 
-class calculate:
+class calculator:
     def __init__(self):  #defines
         self.entry = 0
         self.root = tk.Tk()
@@ -8,6 +8,7 @@ class calculate:
         self.user = tk.Frame()
         self.keyboard = tk.Frame()
         self.user_screen = tk.Entry(master=self.user,width=25)
+        self.run()
 
     def define_buttons(self): #buttons
         self.button_1 = tk.Button(master=self.keyboard,text="1",width=3,command= lambda:self.button_click(1))
@@ -71,18 +72,18 @@ class calculate:
     def delete(self):
         self.user_screen.delete(first=len(self.user_screen.get())-1,last=tk.END)
     
-
-
     def packing(self):
         self.user_screen.pack() #pack and loop
         self.user.pack()
         self.keyboard.pack()
         self.root.mainloop()
+    
+    def run(self):
+        self.define_buttons()
+        self.arrange_buttons()
+        self.packing()
 
-cal=calculate()
-cal.define_buttons()
-cal.arrange_buttons()
-cal.packing()
+
 
 
 
