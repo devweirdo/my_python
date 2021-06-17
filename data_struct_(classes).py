@@ -13,37 +13,65 @@ class Student:
         self.id = id
 
 class Class:
-    def __init__(self, name : str, grade : int, class_members : List[Union[Teacher,Student]]) -> None:
+    def __init__(self, name : str, grade : int, class_members : List[Student]) -> None:
         self.name = name
         self.grade = grade
         self.class_members = {}
         
         for mem in class_members:
-            if type(mem) is Student:
                 self.class_members[mem.id] = mem
-            elif type(mem) is Teacher:
-                self.class_members[mem.subject] = mem
     
     def get_name_by_id(self,id):
         for st_id, st in self.class_members.items():
             if id == st_id:
                 return st.name
 
-    def get_teacher_by_subject(self, subject):
-        for t_subject, teacher in self.class_members.items():
-            if t_subject == subject:
+class School:
+    def __init__(self, name : str, classes : List[Class], teachers : List[Teacher]) ->None:
+        self.name = name
+        self.classes = {}
+        self.teachers = {}
+        for mem in teachers:
+            self.teachers[mem.subject] = mem
+
+    
+    def get_teacher_by_subject(self,subject):
+        for te_subject, teacher in self.teachers.items():
+            if te_subject == subject:
                 return teacher.name
 
+
 classA = Class("math",12,[
-    Student("A","male",1),
-    Student("B","male",2),
-    Student("X","female",3),
-    Student("C","female",4),
-    Teacher("H","male","math")
+    Student("A1","male",1),
+    Student("B1","male",2),
+    Student("X1","female",3),
+    Student("C1","female",4),
 ])
 
-target_st = classA.get_name_by_id(3)    
+classB = Class("Physics",11,[
+    Student("D2","male",1),
+    Student("E2","female",2),
+    Student("H2","male",3),
+    Student("Z2","female",4),
+])
+
+classC = Class("English",10,[
+    Student("D3","male",1),
+    Student("Y3","female",2),
+    Student("L3","male",3),
+    Student("N3","female",4),
+])
+
+BKU = School("BK",[classA,classB,classC],[
+    Teacher("John","male","Math"),
+    Teacher("Kyle","male","Physics"),
+    Teacher("David","male","English"),
+])
+
+
+target_st = classB.get_name_by_id(3)
 print(target_st)
-target_teacher = classA.get_teacher_by_subject("math")
-print(target_teacher)
+search_teacher = BKU.get_teacher_by_subject("English")
+print(search_teacher)
+
 
