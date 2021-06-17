@@ -20,6 +20,7 @@ class Class:
         
         for mem in class_members:
                 self.class_members[mem.id] = mem
+                self.class_members[mem.name] = mem
     
     def get_name_by_id(self,id):
         for st_id, st in self.class_members.items():
@@ -29,17 +30,22 @@ class Class:
 class School:
     def __init__(self, name : str, classes : List[Class], teachers : List[Teacher]) ->None:
         self.name = name
-        self.classes = {}
+        self.classes = classes
         self.teachers = {}
+        
         for mem in teachers:
             self.teachers[mem.subject] = mem
 
-    
     def get_teacher_by_subject(self,subject):
         for te_subject, teacher in self.teachers.items():
             if te_subject == subject:
                 return teacher.name
-
+    
+    def search_st_info(self, name):
+        for i in self.classes:
+            for st_name, st in i.class_members.items():
+                if st_name == name:
+                    return st.name,st.gender,st.id
 
 classA = Class("math",12,[
     Student("A1","male",1),
@@ -71,7 +77,9 @@ BKU = School("BK",[classA,classB,classC],[
 
 target_st = classB.get_name_by_id(3)
 print(target_st)
+
 search_teacher = BKU.get_teacher_by_subject("English")
 print(search_teacher)
 
-
+st_info = BKU.search_st_info("L3")
+print(st_info)
