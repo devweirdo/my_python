@@ -42,12 +42,12 @@ class School:
                 return teacher.name
     
     def search_st_info(self, name):
-        for i in self.classes:
-            for st_name, st in i.class_members.items():
+        for cls in self.classes:
+            for st_name, st in cls.class_members.items():
                 if st_name == name:
-                    return st.name,st.gender,st.id
+                    return st.name,st.gender,st.id,cls.name
 
-classA = Class("math",12,[
+classA = Class("Math",12,[
     Student("A1","male",1),
     Student("B1","male",2),
     Student("X1","female",3),
