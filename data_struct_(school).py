@@ -1,4 +1,5 @@
 from typing import List,Union
+from collections import namedtuple
 
 class Teacher:
     def __init__(self, name : str, gender : str, subject : str):
@@ -17,14 +18,20 @@ class Class:
         self.name = name
         self.grade = grade
         self.class_members = {}
-        
+        # Create a class members dict with student info namedtuple
         for mem in class_members:
-                self.class_members[mem.id] = mem
-                self.class_members[mem.name] = mem
-    
+                self.class_members[mem.name] = {
+                    'name' : mem.name,
+                    'gender': mem.gender,
+                    'id': mem.id,
+                    'Class': self.name
+                    }
+                self.dict_to_tuple = namedtuple(self.name, self.class_members[mem.name])
+                self.class_members[mem.name] = self.dict_to_tuple(**self.class_members[mem.name])
+
     def get_name_by_id(self,id):
-        for st_id, st in self.class_members.items():
-            if id == st_id:
+        for st in self.class_members.values(): #Search in students namedtuples
+            if st.id == id:
                 return st.name
 
 class School:
@@ -42,10 +49,10 @@ class School:
                 return teacher.name
     
     def search_st_info(self, name):
-        for cls in self.classes:
-            for st_name, st in cls.class_members.items():
+        for cls in self.classes: #In school search classes
+            for st_name in cls.class_members: #in class search student's name(dict keys)
                 if st_name == name:
-                    return st.name,st.gender,st.id,cls.name
+                    return cls.class_members[st_name] #return dict values (namedtuple)
 
 classA = Class("Math",12,[
     Student("A1","male",1),
@@ -75,11 +82,13 @@ BKU = School("BK",[classA,classB,classC],[
 ])
 
 
-target_st = classB.get_name_by_id(3)
-print(target_st)
+# target_st = classB.get_name_by_id(2)
+# print(target_st)
 
-search_teacher = BKU.get_teacher_by_subject("English")
-print(search_teacher)
+# search_teacher = BKU.get_teacher_by_subject("English")
+# print(search_teacher)
 
-st_info = BKU.search_st_info("A1")
+st_info = BKU.search_st_info("D2")
 print(st_info)
+print(st_info.name)
+print(st_info.Class)
