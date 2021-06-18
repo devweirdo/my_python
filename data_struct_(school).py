@@ -81,5 +81,5 @@ print(target_st)
 search_teacher = BKU.get_teacher_by_subject("English")
 print(search_teacher)
 
-st_info = BKU.search_st_info("L3")
+st_info = BKU.search_st_info("A1")
 print(st_info)
