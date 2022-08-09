@@ -66,7 +66,7 @@ class calculator:
             self.user_screen.insert(0, self.entry)
         except:
             self.user_screen.delete(0, tk.END)
-            self.user_screen.insert(0,"error")
+            self.user_screen.insert(0,"math error")
         
     def clear(self): #clear screen
         self.user_screen.delete(0, tk.END)
@@ -91,7 +91,7 @@ class calculator:
     def time(self):
         self.string = time.strftime('%H:%M:%S %p')
         self.label_time.config(text = self.string)
-        self.label_time.after(1000,func=self.time)
+        self.label_time.after(1,func=self.time)
 
 
 calc=calculator()
